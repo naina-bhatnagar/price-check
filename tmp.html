@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Price Check</title>
+<style>
+  :root{
+    --paper:#FBF7F0;
+    --ink:#2B2A28;
+    --accent:#2F6B4F;
+    --accent-soft:#E4EEE7;
+    --line:#DDD5C7;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:32px 20px 60px;
+  }
+  .wrap{max-width:520px;margin:0 auto;}
+  h1{
+    font-size:28px;
+    margin:0 0 6px;
+    letter-spacing:-0.02em;
+  }
+  p.sub{
+    color:#6B6558;
+    margin:0 0 32px;
+    font-size:16px;
+    line-height:1.5;
+  }
+  label{
+    display:block;
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:8px;
+    color:var(--ink);
+  }
+  input{
+    width:100%;
+    font-size:20px;
+    padding:14px 16px;
+    border:2px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    color:var(--ink);
+    margin-bottom:20px;
+    font-family:inherit;
+  }
+  input:focus{
+    outline:none;
+    border-color:var(--accent);
+  }
+  button{
+    width:100%;
+    font-size:20px;
+    font-weight:700;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:var(--accent);
+    color:white;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  button:active{ opacity:0.85; }
+  .results{
+    margin-top:36px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .results.hidden{ display:none; }
+  .store-link{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 20px;
+    text-decoration:none;
+    color:var(--ink);
+    font-size:18px;
+    font-weight:600;
+    transition:transform .1s ease;
+  }
+  .store-link:active{ transform:scale(0.98); }
+  .store-name{ display:flex; align-items:center; gap:12px; }
+  .dot{
+    width:12px;height:12px;border-radius:50%;
+    flex-shrink:0;
+  }
+  .arrow{ color:#A39C8C; font-size:20px; }
+  .note{
+    margin-top:28px;
+    background:var(--accent-soft);
+    border-radius:12px;
+    padding:14px 16px;
+    font-size:14px;
+    line-height:1.5;
+    color:#3D5245;
+  }
+  .amazon .dot{background:#FF9900;}
+  .flipkart .dot{background:#2874F0;}
+  .bigbasket .dot{background:#84C225;}
+  .blinkit .dot{background:#F8CB46;}
+  .jiomart .dot{background:#0078AD;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Price Check</h1>
+  
+  <label for="product">What are you looking for?</label>
+  <input id="product" type="text" placeholder="e.g. Amul butter 500g" autocomplete="off">
+
+  <button onclick="showResults()">Search</button>
+
+  <div id="results" class="results hidden">
+    <a class="store-link amazon" id="link-amazon" target="_blank" rel="noopener">
+      <span class="store-name"><span class="dot"></span>Amazon</span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="store-link flipkart" id="link-flipkart" target="_blank" rel="noopener">
+      <span class="store-name"><span class="dot"></span>Flipkart Minutes</span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="store-link bigbasket" id="link-bigbasket" target="_blank" rel="noopener">
+      <span class="store-name"><span class="dot"></span>BigBasket</span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="store-link blinkit" id="link-blinkit" target="_blank" rel="noopener">
+      <span class="store-name"><span class="dot"></span>Blinkit</span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="store-link jiomart" id="link-jiomart" target="_blank" rel="noopener">
+      <span class="store-name"><span class="dot"></span>JioMart</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+</div>
+
+<script>
+function showResults(){
+  const product = document.getElementById('product').value.trim();
+  if(!product){
+    document.getElementById('product').focus();
+    return;
+  }
+  const q = encodeURIComponent(product);
+
+  document.getElementById('link-amazon').href =
+    `https://www.amazon.in/s?k=${q}`;
+    
+    document.getElementById('link-amazon-now').href =
+    `https://www.amazon.in/tez/browse/search?&searchKeyword=${q}`;
+
+    document.getElementById('link-flipkart').href =
+      `https://www.amazon.in/s?k=${q}`;
+
+  document.getElementById('link-flipkart-mins').href =
+    `https://www.flipkart.com/hyperlocal/pr/search?q=${q}&marketplace=HYPERLOCAL&sid=search.flipkart.com`;
+
+    document.getElementById('link-jiomart').href =
+    `https://www.jiomart.com/products?q=/${q}&searchtype=standard`;
+
+  document.getElementById('link-bigbasket').href =
+    `https://www.bigbasket.com/ps/?q=${q}`;
+
+  document.getElementById('link-blinkit').href =
+    `https://blinkit.com/s/?q=${q}`;
+
+
+  document.getElementById('results').classList.remove('hidden');
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.getElementById('product').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') showResults();
+});
+</script>
+</body>
+</html>

@@ -107,6 +107,7 @@
         }
         .amazon .dot{background:#FF9900;}
         .flipkart .dot{background:#2874F0;}
+        .jiomart .dot{background:#ff0000;}
         .bigbasket .dot{background:#84C225;}
         .blinkit .dot{background:#F8CB46;}
         </style>
@@ -125,8 +126,24 @@
                     <span class="store-name"><span class="dot"></span>Amazon</span>
                     <span class="arrow">→</span>
                 </a>
+                <a class="store-link amazon" id="link-amazon-now" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>Amazon Now</span>
+                    <span class="arrow">→</span>
+                </a>
                 <a class="store-link flipkart" id="link-flipkart" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>Flipkart</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="store-link flipkart" id="link-flipkart-now" target="_blank" rel="noopener">
                     <span class="store-name"><span class="dot"></span>Flipkart Minutes</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="store-link jiomart" id="link-jiomart" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>JioMart</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="store-link jiomart" id="link-jiomart-now" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>JioMart Quick</span>
                     <span class="arrow">→</span>
                 </a>
                 <a class="store-link bigbasket" id="link-bigbasket" target="_blank" rel="noopener">
@@ -141,32 +158,53 @@
         </div>
 
         <script>
+
         function showResults(){
-        const product = document.getElementById('product').value.trim();
-        if(!product){
-            document.getElementById('product').focus();
-            return;
-        }
-        const q = encodeURIComponent(product);
+            const product = document.getElementById('product').value.trim();
+            if(!product){
+                document.getElementById('product').focus();
+                return;
+            }
+            const q = encodeURIComponent(product);
 
-        document.getElementById('link-amazon').href =
-            `https://www.amazon.in/s?k=${q}`;
+            document.getElementById('link-amazon').href =
+                `https://www.amazon.in/s?k=${q}`;
+                
+            document.getElementById('link-amazon-now').href =
+                `https://www.amazon.in/tez/browse/search?&searchKeyword=${q}`;
 
-        document.getElementById('link-flipkart').href =
-            `https://www.flipkart.com/hyperlocal/pr/search?q=${q}&marketplace=HYPERLOCAL&sid=search.flipkart.com`;
+            document.getElementById('link-flipkart').href =
+                `https://www.flipkart.com/search?q=${q}`;
 
-        document.getElementById('link-bigbasket').href =
-            `https://www.bigbasket.com/ps/?q=${q}`;
+            document.getElementById('link-flipkart-now').href =
+                `https://www.flipkart.com/hyperlocal/pr/search?q=${q}&marketplace=HYPERLOCAL&sid=search.flipkart.com`;
 
-        document.getElementById('link-blinkit').href =
-            `https://blinkit.com/s/?q=${q}`;
+            document.getElementById('link-jiomart').href =
+                `https://www.jiomart.com/products?q=/${q}&searchtype=standard`;
 
-        document.getElementById('results').classList.remove('hidden');
-        document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+            document.getElementById('link-jiomart-now').href =
+                `https://www.jiomart.com/products?q=/${q}`;
+
+            document.getElementById('link-bigbasket').href =
+                `https://www.bigbasket.com/ps/?q=${q}`;
+
+            document.getElementById('link-blinkit').href =
+                `https://blinkit.com/s/?q=${q}`;
+
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
         }
 
         document.getElementById('product').addEventListener('keydown', function(e){
         if(e.key === 'Enter') showResults();
+        });
+
+        window.addEventListener('beforeunload', function (e) {
+            const inputField = document.getElementById('product');
+            if (inputField && inputField.value.trim() !== "") {
+                e.preventDefault();
+                e.returnValue = 'Are you sure you want to leave? Your search progress will be lost.';
+            }
         });
         </script>
     </body>
