@@ -6,6 +6,12 @@ Instead of manually opening four different apps or tabs and retyping your item n
 
 ---
 
+Link: [Github Pages](https://naina-bhatnagar.github.io/price-check/)
+
+<img width="1537" height="1073" alt="image" src="https://github.com/user-attachments/assets/19b074d9-ff56-45aa-95b9-8407dd45c3c9" />
+
+---
+
 ## Features
 
 *   **Single-Input Search:** Type your product once to search across multiple platforms.
