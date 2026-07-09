@@ -108,8 +108,12 @@
         .amazon .dot{background:#FF9900;}
         .flipkart .dot{background:#2874F0;}
         .jiomart .dot{background:#ff0000;}
+        .myntra .dot{background:#fb02d6;}
         .bigbasket .dot{background:#84C225;}
         .blinkit .dot{background:#F8CB46;}
+        .instamart .dot{background:#1c24fe;}
+        .citymall .dot{background:#c0350b;}
+        .meesho .dot{background:#540a91;}
         </style>
     </head>
     <body>
@@ -146,6 +150,10 @@
                     <span class="store-name"><span class="dot"></span>JioMart Quick</span>
                     <span class="arrow">→</span>
                 </a>
+                <a class="store-link myntra" id="link-myntra" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>Myntra</span>
+                    <span class="arrow">→</span>
+                </a>
                 <a class="store-link bigbasket" id="link-bigbasket" target="_blank" rel="noopener">
                     <span class="store-name"><span class="dot"></span>BigBasket</span>
                     <span class="arrow">→</span>
@@ -154,17 +162,36 @@
                     <span class="store-name"><span class="dot"></span>Blinkit</span>
                     <span class="arrow">→</span>
                 </a>
+                <a class="store-link instamart" id="link-instamart" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>Instamart</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="store-link citymall" id="link-citymall" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>CityMall</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a class="store-link meesho" id="link-meesho" target="_blank" rel="noopener">
+                    <span class="store-name"><span class="dot"></span>Meesho</span>
+                    <span class="arrow">→</span>
+                </a>
             </div>
         </div>
 
         <script>
+        const inputField = document.getElementById('product');
+
+        // Restore saved value
+        const saved = sessionStorage.getItem('product_draft');
+        if (saved) inputField.value = saved;
 
         function showResults(){
-            const product = document.getElementById('product').value.trim();
+            const product = inputField.value.trim();
             if(!product){
-                document.getElementById('product').focus();
+                inputField.focus();
                 return;
             }
+
+            sessionStorage.setItem('product_draft', product);
             const q = encodeURIComponent(product);
 
             document.getElementById('link-amazon').href =
@@ -185,23 +212,34 @@
             document.getElementById('link-jiomart-now').href =
                 `https://www.jiomart.com/products?q=${q}`;
 
+            document.getElementById('link-myntra').href =
+                `https://www.myntra.com/${q}`;
+
             document.getElementById('link-bigbasket').href =
                 `https://www.bigbasket.com/ps/?q=${q}`;
 
             document.getElementById('link-blinkit').href =
                 `https://blinkit.com/s/?q=${q}`;
 
+            document.getElementById('link-instamart').href =
+                `https://www.swiggy.com/instamart/search?custom_back=true&query=${q}`;
+
+            document.getElementById('link-citymall').href =
+                `https://citymall.live/search/grocery?search_term=${q}`;
+
+            document.getElementById('link-meesho').href =
+                `https://www.meesho.com/search?q=${q}`;
+
             document.getElementById('results').classList.remove('hidden');
             document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
         }
 
-        document.getElementById('product').addEventListener('keydown', function(e){
-        if(e.key === 'Enter') showResults();
+        inputField.addEventListener('keydown', function(e){
+            if(e.key === 'Enter') showResults();
         });
 
         // 1. Handle desktop reloads and tab closures
         window.addEventListener('beforeunload', function (e) {
-            const inputField = document.getElementById('product');
             if (inputField && inputField.value.trim() !== "") {
                 e.preventDefault();
                 e.returnValue = '';
@@ -212,7 +250,6 @@
         window.history.pushState({ page: 1 }, "", "");
 
         window.addEventListener('popstate', function (event) {
-            const inputField = document.getElementById('product');
             if (inputField && inputField.value.trim() !== "") {
                 const stay = confirm("Are you sure you want to go back? Your search terms will be cleared.");
                 
