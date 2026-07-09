@@ -8,7 +8,7 @@ Instead of manually opening multiple different apps or tabs and retyping your it
 
 Link: [Github Pages](https://naina-bhatnagar.github.io/price-check/)
 
-![Image](image.png)
+<img width="1112" height="1042" alt="Screenshot 2026-07-10 011413" src="https://github.com/user-attachments/assets/bbefee34-53fe-4a66-a67c-49e1ac82b6c2" />
 
 ---
 
